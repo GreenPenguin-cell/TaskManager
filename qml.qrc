@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>UIComponents_ListViewTable.qml</file>
     </qresource>
 </RCC>
