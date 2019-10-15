@@ -1,25 +1,35 @@
 import QtQuick 2.6
 import QtQuick.Window 2.2
 import QtQuick.Controls 1.4
+import "../UIComponents"
 
 Item {
-    id:main_page
-    visible: true
-    width: 800
-    height: 700
+
     property QtObject dataModel: undefined
 //    title: qsTr("Диспетчер задач")
-    Button
+//    Button
+//    {
+//        id:but_add
+//        x:549
+//        y:37
+//        text:"Добавить"
+//        onClicked:
+//        {
+//            dataModel.add("Commnad", "Alias Command")
+//        }
+//    }
+    UICOmponents_Button
     {
         id:but_add
         x:549
         y:37
         text:"Добавить"
-        onClicked:
+        onS_triggered:
         {
             dataModel.add("Commnad", "Alias Command")
         }
     }
+
     Button
     {
         id:but_change

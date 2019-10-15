@@ -1,13 +1,11 @@
 import QtQuick 2.6
 import QtQuick.Window 2.2
 import QtQuick.Controls 1.4
+import "UIComponents"
 
 Item {
-    id:main_page
-    visible: true
-    width: 800
-    height: 700
-    property QtObject dataModel: undefined
+
+    property QtObject dataModel: dataModel
 //    title: qsTr("Диспетчер задач")
     Button
     {
