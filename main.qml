@@ -15,21 +15,26 @@ Window {
     }
 
 
+
+    //Сигнал поступающий с кнопок панелей
+    signal s_but_panel_click(string arg_but_param)
+
+
     id:mainWindow
     visible: true
     width: 800
     height: 700
     //Для стартовой страницы сойдет и так загружать
     //Впринципе, тут можно больше особо ничего не писать
-   Loader
-   {
-       id:load_main
-       anchors.fill: parent
-       Component.onCompleted:
-       {
-           setSource("UI/UIPages/UIPages_Main.qml", {dataModel:dataModel})
-       }
-   }
+    Loader
+    {
+        id:load_main
+        anchors.fill: parent
+        Component.onCompleted:
+        {
+            setSource("UI/UIPages/UIPages_Main.qml", {dataModel:dataModel})
+        }
+    }
 
 }
 

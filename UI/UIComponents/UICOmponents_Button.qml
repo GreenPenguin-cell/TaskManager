@@ -11,6 +11,9 @@ Rectangle {
     border.width: 2
 
     signal s_triggered
+    //Хранит параметр передаваемый сигналом, это нужно для создания таких кнопок в репитере
+    //ЧТобы анализируя параметр выполнять разные действия
+    property string p_slot_param: ""
     property string text: ""
     MouseArea
     {

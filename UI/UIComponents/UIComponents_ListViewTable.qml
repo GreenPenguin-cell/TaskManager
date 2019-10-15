@@ -6,6 +6,7 @@ Rectangle {
     height: parent.height/1.4
     property QtObject dataSourse: undefined //Хранит модель данных
     property  int  column_count: 0
+    property  int p_current_index
 
     ListModel
     {
@@ -68,37 +69,44 @@ Rectangle {
             width: view.width
             height: 40
 
+            Binding
+            {
+                target: rec_view
+                property: "p_current_index"
+                value: view.currentIndex
+            }
+
             Rectangle {
                 id:rec_view_componenet
                 anchors.margins: 5
                 anchors.fill: parent
                 // radius: height / 2
 
-//                Rectangle
-//                {
-//                    id:rec_splitter
-//                    x:parent.width/2
-//                    y:0
-//                    width: 1
-//                    height: parent.height
-//                    color: "black"
-//                }
-//                Text
-//                {
-//                    id:txt_command
-//                    x:0
-//                    y:1
-//                    renderType: Text.NativeRendering
-//                    text:model.CommandNameRole
-//                }
-//                Text
-//                {
-//                    id:txt_alias
-//                    x:parent.width/2+1
-//                    y:1
-//                    renderType: Text.NativeRendering
-//                    text:model.CommandAliasRole
-//                }
+                Rectangle
+                {
+                    id:rec_splitter
+                    x:parent.width/2
+                    y:0
+                    width: 1
+                    height: parent.height
+                    color: "black"
+                }
+                Text
+                {
+                    id:txt_command
+                    x:0
+                    y:1
+                    renderType: Text.NativeRendering
+                    text:model.CommandNameRole
+                }
+                Text
+                {
+                    id:txt_alias
+                    x:parent.width/2+1
+                    y:1
+                    renderType: Text.NativeRendering
+                    text:model.CommandAliasRole
+                }
 
                 color: "white"//model.color
                 border {
@@ -117,6 +125,11 @@ Rectangle {
             }
         }
     }
+    function f_get_current_index()
+    {
+        return p_current_index
+    }
+
     function f_column_add(arg_text)
     {
         column_count+=1

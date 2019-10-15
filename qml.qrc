@@ -6,5 +6,6 @@
         <file>UI/UIComponents/UIComponents_InputWindow.qml</file>
         <file>UI/UIComponents/UICOmponents_Button.qml</file>
         <file>UI/UIPages/UIPages_Main.qml</file>
+        <file>UI/UIComponents/UIComponents_ButtonsPanel.qml</file>
     </qresource>
 </RCC>
