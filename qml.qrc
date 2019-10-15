@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>UIComponents_ListViewTable.qml</file>
+        <file>UIPages_Main.qml</file>
     </qresource>
 </RCC>

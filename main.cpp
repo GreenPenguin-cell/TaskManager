@@ -10,11 +10,14 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
+    qmlRegisterType<TaskModel>("dataModel", 1,0, "TaskModel");
+
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     TaskModel dataModel;
     QQmlContext *ctxt = engine.rootContext();
-    ctxt->setContextProperty("dataModel", &dataModel);
+    //ctxt->setContextProperty("dataModel", &dataModel);
+
 
     if (engine.rootObjects().isEmpty())
         return -1;
