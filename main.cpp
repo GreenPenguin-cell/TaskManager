@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 #include "taskmodel.h"
 #include "QQmlContext"
+#include "pagesdiscripion.h"
 
 
 int main(int argc, char *argv[])
@@ -10,13 +11,19 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
+
+
     qmlRegisterType<TaskModel>("dataModel", 1,0, "TaskModel");
 
     QQmlApplicationEngine engine;
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-    TaskModel dataModel;
+
+    PagesDiscripion pagesDiscripion;
     QQmlContext *ctxt = engine.rootContext();
-    //ctxt->setContextProperty("dataModel", &dataModel);
+    ctxt->setContextProperty("pagesDiscripion", &pagesDiscripion);
+
+    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+
+
 
 
     if (engine.rootObjects().isEmpty())

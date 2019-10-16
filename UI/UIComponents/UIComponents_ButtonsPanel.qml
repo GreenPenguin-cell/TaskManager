@@ -34,30 +34,30 @@ Rectangle
         id:p_model
         property string p_param
         property int p_id
-        ListElement
-        {
-            text:"Сыл"
-            p_param:"but_add"
-            p_id:4
-        }
-        ListElement
-        {
-            text:"Добавить"
-            p_param:"but_add"
-            p_id:3
-        }
-        ListElement
-        {
-            text:"Изменить"
-            p_param:"but_change"
-            p_id:2
-        }
-        ListElement
-        {
-            text:"Удалить"
-            p_param:"but_del"
-            p_id:1
-        }
+//        ListElement
+//        {
+//            text:"Сыл"
+//            p_param:"but_add"
+//            p_id:4
+//        }
+//        ListElement
+//        {
+//            text:"Добавить"
+//            p_param:"but_add"
+//            p_id:3
+//        }
+//        ListElement
+//        {
+//            text:"Изменить"
+//            p_param:"but_change"
+//            p_id:2
+//        }
+//        ListElement
+//        {
+//            text:"Удалить"
+//            p_param:"but_del"
+//            p_id:1
+//        }
 
 
     }
@@ -89,13 +89,13 @@ Rectangle
 
     }
 
-    function f_element_add(arg_text, arg_but_param)//, arg_alias_text)
+    function f_element_add(arg_text, arg_but_param, arg_id)//, arg_alias_text)
     {
 
 
-        p_elements_count += 1
+       // p_elements_count += 1
 
-        p_model.append({p_id:p_elements_count, text:arg_text, p_param:arg_but_param})
+        p_model.append({p_id:arg_id, text:arg_text, p_param:arg_but_param})
 
 
     }

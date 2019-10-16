@@ -17,7 +17,7 @@ Window {
 
 
     //Сигнал поступающий с кнопок панелей
-    signal s_but_panel_click(string arg_but_param)
+   // signal s_but_panel_click(string arg_but_param)
 
 
     id:mainWindow
