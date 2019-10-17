@@ -91,13 +91,7 @@ Rectangle
 
     function f_element_add(arg_text, arg_but_param, arg_id)//, arg_alias_text)
     {
-
-
-       // p_elements_count += 1
-
         p_model.append({p_id:arg_id, text:arg_text, p_param:arg_but_param})
-
-
     }
 
 

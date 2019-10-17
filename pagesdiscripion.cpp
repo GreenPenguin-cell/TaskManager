@@ -17,10 +17,20 @@ PagesDiscripion::PagesDiscripion()
     page p2("UIPages_TasksCategory.qml", "but_pageChange_Cat");
     p_pages.append(p2);
 
-    for(int i=0;i<p_pages.count();i++)
-    {
-        qDebug()<<p_pages[i].p_sourse;
-    }
+    page p3("UIPages_AddChange.qml", "but_addChange");
+    p_pages.append(p3);
+
+    page p4("UIPages_Settings.qml", "but_ChangePage_Set");
+    p_pages.append(p4);
+
+    page p5("UIPages_Game.qml", "but_pageChange_game");
+    p_pages.append(p5);
+
+
+//    for(int i=0;i<p_pages.count();i++)
+//    {
+//        qDebug()<<p_pages[i].p_sourse;
+//    }
 
     p_current_page=p_pages[0];
 }
@@ -35,6 +45,7 @@ void PagesDiscripion::f_set_current_page(QString command)
             return;
         }
     }
+
 }
 
 QString PagesDiscripion::f_get_current_page_sourse()

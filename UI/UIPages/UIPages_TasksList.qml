@@ -4,7 +4,18 @@ import QtQuick.Controls 1.4
 import "../UIComponents"
 
 Item {
+    id:list_page
     property  QtObject dataModel: undefined
+    //signal s_task_click(int id)
+    Connections
+    {
+        target: data_view
+        onS_model_element_click:
+        {
+           s_task_click(id)
+        }
+    }
+
     UIComponents_ListViewTable
     {
         id:data_view

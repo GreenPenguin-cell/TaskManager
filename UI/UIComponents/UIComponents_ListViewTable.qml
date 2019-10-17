@@ -29,6 +29,9 @@ Rectangle {
     property int p_element_width: 100
     property int p_element_height: 70
 
+    //Вызывается при нажатии на элемент
+      signal s_model_element_click(int id)
+
     ListModel
     {
         id:lmododel_headers
@@ -71,8 +74,15 @@ Rectangle {
                 onS_triggered:
                 {
                     view.currentIndex = model.index
+                    s_model_element_click(view.currentIndex)
                     //Будет открытие страницы просмотра и изменения(отправка сигнала с индексом)
                     //console.log(view.currentIndex)
+                }
+                Text
+                {
+                    x:3
+                    y:1
+                    text: model.CommandAliasRole
                 }
             }
 

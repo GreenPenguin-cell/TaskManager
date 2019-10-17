@@ -10,6 +10,7 @@ class TaskModel : public QAbstractListModel
     Q_OBJECT
 
 public:
+
     struct Command
     {
         Command(QString name, QString alias) {

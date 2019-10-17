@@ -13,6 +13,10 @@ class PagesDiscripion : public QObject
 public:
     //explicit PagesDiscripion(QObject *parent = nullptr);
 
+
+
+
+
     struct page //Структура хранит описание отдельной страницы
     {
         page(QString arg_sourse="", QString arg_command="")
@@ -31,6 +35,7 @@ public:
     Q_INVOKABLE QString f_get_current_page_sourse();
 
 signals:
+    void s_p_current_idChanged();
 
 public slots:
 private:

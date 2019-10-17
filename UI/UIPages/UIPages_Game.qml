@@ -5,10 +5,9 @@ Item {
     {
         id:main_rec
         anchors.fill: parent
-        color: "black"
+        color: "skyblue"
         Text {
             id: name
-            color: "white"
             text: qsTr("game page")
         }
     }

@@ -5,7 +5,7 @@ Item {
     {
         id:main_rec
         anchors.fill: parent
-        color: "blue"
+        color: "white"
         Text {
             id: name
             text: qsTr("Settings page")

@@ -6,18 +6,14 @@
         <file>UI/UIComponents/UIComponents_InputWindow.qml</file>
         <file>UI/UIComponents/UICOmponents_Button.qml</file>
         <file>UI/UIPages/UIPages_Main.qml</file>
-
-
         <file>UI/UIPages/UIPages_TasksCategory.qml</file>
-
         <file>UI/UIPages/UIPages_TasksPriority.qml</file>
-
-
-
         <file>UI/UIPages/UIPages_TasksList.qml</file>
-
         <file>UI/UIComponents/UIComponents_ButtonsPanel.qml</file>
-        <file>UI/UIComponents/back.jpg</file> 
+        <file>UI/UIComponents/back.jpg</file>
         <file>UI/UIComponents/element.jpeg</file>
-   </qresource>
+        <file>UI/UIPages/UIPages_AddChange.qml</file>
+        <file>UI/UIPages/UIPages_Game.qml</file>
+        <file>UI/UIPages/UIPages_Settings.qml</file>
+    </qresource>
 </RCC>
