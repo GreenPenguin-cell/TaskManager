@@ -4,6 +4,7 @@
 #include <QObject>
 #include "QList"
 #include "QString"
+#include "QStringList"
 
 class PagesDiscripion : public QObject
 {
@@ -12,10 +13,6 @@ class PagesDiscripion : public QObject
     Q_OBJECT
 public:
     //explicit PagesDiscripion(QObject *parent = nullptr);
-
-
-
-
 
     struct page //Структура хранит описание отдельной страницы
     {
@@ -29,10 +26,12 @@ public:
         //Команда, по которой объект должен стать активным
         QString p_upCommand;
 
+
     };
     PagesDiscripion();
     Q_INVOKABLE void f_set_current_page(QString command);
     Q_INVOKABLE QString f_get_current_page_sourse();
+
 
 signals:
     void s_p_current_idChanged();

@@ -27,14 +27,15 @@ Item {
     }
     Component.onCompleted:
     {
-        dataModel.add("Commnad", "Alias Command")
-        dataModel.add("Commnad", "Alias Command")
-        dataModel.add("Commnad", "Alias Command")
+        dataModel.add("Commnad", "Alias Command", "15:00", "вт окт. 18 2019", 0)
+       dataModel.add("Commnad", "Alias Command", "15:00", "22.04.19", 0)
+        dataModel.add("Commnad", "Alias Command", "15:00", "22.04.19", 0)
     }
 
     Connections
     {
-        //Вызыввается из страницы со списком задач при клике на одну из них
+        //Вызыввается из главного окна сигналом-перенаправителем из
+        //страницы со списком задач при клике на одну из них
        target: mainwindow
        onS_task_click:
        {
@@ -77,12 +78,16 @@ Item {
             f_element_add("Добавить", "but_addChange",2)
             f_element_add("Настройки", "but_ChangePage_Set",1)
         }
+
+
     }
+
     //Загружает страницу
     function f_load_page()
     {
         load_pages.setSource(pagesDiscripion.f_get_current_page_sourse(), {dataModel:dataModel})
     }
+
 
 
 }

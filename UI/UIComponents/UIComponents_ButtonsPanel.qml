@@ -25,8 +25,8 @@ Rectangle
     id:rec_main
     width: p_element_width +30
     height: 2
-    color:p_background_color
-    border.color: p_border_color
+    //color:p_background_color
+   // border.color: p_border_color
     border.width: 2
 
     ListModel

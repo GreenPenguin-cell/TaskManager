@@ -1,10 +1,14 @@
 #include "taskmodel.h"
+#include "QDebug"
 
 TaskModel::TaskModel(QObject *parent):
     QAbstractListModel(parent)
 {
     //    m_data.append("old");
     //    m_data.append("another old");
+    //qDebug()<<QDate::currentDate().toString();
+    p_categs.append("Хуета");
+    p_test.append("pizda");
 }
 
 int TaskModel::rowCount(const QModelIndex &parent) const
@@ -23,10 +27,16 @@ QVariant TaskModel::data(const QModelIndex &index, int role) const
     }
 
     switch (role) {
-    case CommandNameRole:
-        return m_data.at(index.row()).name;// QVariant(index.row() < 2 ? "orange" : "skyblue");
-    case CommandAliasRole:
-        return m_data.at(index.row()).alias;
+    case TaskNameRole:
+        return m_data.at(index.row()).p_task_name;// QVariant(index.row() < 2 ? "orange" : "skyblue");
+    case TaskDiscrRole:
+        return m_data.at(index.row()).p_task_discr;
+    case TaskDateRole:
+        return m_data.at(index.row()).p_task_date.toString();
+    case TaskTimeRole:
+        return m_data.at(index.row()).p_task_time.toString();
+    case TaskCategRole:
+        return p_categs.at(m_data.at(index.row()).p_task_categ_id);
     default:
         return QVariant();
     }
@@ -35,16 +45,23 @@ QVariant TaskModel::data(const QModelIndex &index, int role) const
 QHash<int, QByteArray> TaskModel::roleNames() const
 {
     QHash<int, QByteArray> roles = QAbstractListModel::roleNames();
-    roles[CommandNameRole] = "CommandNameRole";
-    roles[CommandAliasRole] = "CommandAliasRole";
+    roles[TaskNameRole] = "TaskNameRole";
+    roles[TaskDiscrRole] = "TaskDiscrRole";
+    roles[TaskTimeRole] = "TaskTimeRole";
+    roles[TaskDateRole] = "TaskDateRole";
+    roles[TaskCategRole] = "TaskCategRole";
 
     return roles;
 }
 
-void TaskModel::add(QString command, QString alias)
+void TaskModel::add(QString arg_task_name,
+                    QString arg_task_discr,
+                    QString arg_task_time,
+                    QString arg_task_date,
+                    int arg_task_categ_id)
 {
     beginInsertRows(QModelIndex(), m_data.size(), m_data.size());
-    Command com(command,alias);
+    Command com(arg_task_name,arg_task_discr,arg_task_time, arg_task_date,arg_task_categ_id);
     m_data.append(com);
     endInsertRows();
 
@@ -62,12 +79,16 @@ bool TaskModel::removeRow(int row, const QModelIndex &parent)
     return true;
 }
 
-void TaskModel::change(int  index_row, QString command_value, QString alias_value)
+void TaskModel::change(int  index_row, QString arg_task_name,
+                                        QString arg_task_discr,
+                                        QString arg_task_time,
+                                        QString arg_task_date,
+                                        int arg_task_categ_id)
 {
     removeRow(index_row, QModelIndex());
 
     beginInsertRows(QModelIndex(), index_row, index_row);
-    Command com(command_value,alias_value);
+    Command com(arg_task_name,arg_task_discr,arg_task_time,arg_task_date,arg_task_categ_id);
     m_data.insert(index_row, com);
     endInsertRows();
     QModelIndex index = createIndex(0, 0, static_cast<void *>(0));
@@ -81,16 +102,25 @@ bool TaskModel::setData(const QModelIndex &index, const QVariant &value, int rol
     }
     if(role == -1)
     {
-        m_data[index.row()].name = value.toString();
+        m_data[index.row()].p_task_name = value.toString();
     }
     else
     {
         switch (role) {
-        case CommandNameRole:
-            m_data[index.row()].name = value.toString();
+        case TaskNameRole:
+            m_data[index.row()].p_task_name = value.toString();
             break;
-        case CommandAliasRole:
-            m_data[index.row()].alias = value.toString();
+        case TaskDiscrRole:
+            m_data[index.row()].p_task_discr = value.toString();
+            break;
+        case TaskTimeRole:
+            m_data[index.row()].p_task_time = QTime::fromString(value.toString());
+            break;
+        case TaskDateRole:
+            m_data[index.row()].p_task_date = QDate::fromString(value.toString());
+            break;
+        case TaskCategRole:
+            m_data[index.row()].p_task_categ_id = value.toInt();
             break;
         default:
             return false;

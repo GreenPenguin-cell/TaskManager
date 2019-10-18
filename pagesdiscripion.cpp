@@ -11,8 +11,10 @@
 PagesDiscripion::PagesDiscripion()
 {
     page p("UIPages_TasksList.qml", "but_pageChange_list");
+
     p_pages.append(p);
     page p1("UIPages_TasksPriority.qml", "but_PageChange_Prior");
+
     p_pages.append(p1);
     page p2("UIPages_TasksCategory.qml", "but_pageChange_Cat");
     p_pages.append(p2);

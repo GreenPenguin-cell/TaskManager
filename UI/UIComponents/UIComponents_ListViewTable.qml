@@ -63,7 +63,7 @@ Rectangle {
             height: p_element_height//-10
             UICOmponents_Button
             {
-                text: model.CommandNameRole
+                text: ""//model.TaskNameRole
                 width: p_element_width
                 height: p_element_height
                 border.width: 2
@@ -75,14 +75,41 @@ Rectangle {
                 {
                     view.currentIndex = model.index
                     s_model_element_click(view.currentIndex)
-                    //Будет открытие страницы просмотра и изменения(отправка сигнала с индексом)
-                    //console.log(view.currentIndex)
                 }
                 Text
                 {
-                    x:3
-                    y:1
-                    text: model.CommandAliasRole
+
+                    x:parent.width/20
+                    y:parent.height/10
+                    font.pixelSize: parent.height/5
+                    text: model.TaskNameRole
+                }
+                Text
+                {
+
+                    id:txt_time
+                    x:parent.width/20
+                    y:parent.height/1.5
+                    font.pixelSize: parent.height/10
+                    text: "DeadLine: "+model.TaskTimeRole
+                }
+                Text
+                {
+
+                    id:txt_date
+                    x:txt_time.contentWidth*1.4
+                    y:parent.height/1.5
+                    font.pixelSize: parent.height/10
+                    text: model.TaskDateRole
+                }
+                Text
+                {
+
+                    id:txt_categ
+                    x:parent.width/20
+                    y:parent.height/1.2
+                    font.pixelSize: parent.height/10
+                    text: "Категория: "+model.TaskCategRole
                 }
             }
 

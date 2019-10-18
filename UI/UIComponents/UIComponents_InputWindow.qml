@@ -16,7 +16,9 @@ Rectangle {
     property string  p_text: ""
 
     property string binding_prop_name: ""
-    property QtObject binding_object: undefined
+    property QtObject binding_object: Component
+
+    property bool is_multiline: false
     Binding
     {
         id:binding
@@ -29,6 +31,11 @@ Rectangle {
     {
         id:text_inp
         anchors.fill: parent
+        x:2
+        y:2
+        width: parent.width-3
+        height: parent.height-3
+        font.pixelSize: parent.height/2
         text:"<Enter text>"
         onTextChanged: p_message = text_inp.text
         Text
@@ -45,8 +52,11 @@ Rectangle {
         header.visible = has_header
         header.text = header_text
         if(binding_object === undefined)
-            binding.deleteLater()
+            binding_object=Component
         f_set_text(p_text)
+
+        if(is_multiline)
+            text_inp.font.pixelSize=inp_rec.height/6
     }
 
 

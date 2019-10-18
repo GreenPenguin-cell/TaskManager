@@ -44,6 +44,7 @@ Rectangle {
         width: 3
         height: text_but.contentHeight
         text:"X"
+        font.pointSize: 9
         x:parent.width/2-contentWidth/2
         y:parent.height/2-contentHeight/2
         onTextChanged:
