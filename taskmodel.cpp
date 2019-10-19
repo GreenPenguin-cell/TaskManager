@@ -8,7 +8,10 @@ TaskModel::TaskModel(QObject *parent):
     //    m_data.append("another old");
     //qDebug()<<QDate::currentDate().toString();
     p_categs.append("Хуета");
-    p_test.append("pizda");
+    p_categs.append("Говно");
+
+   f_clear_changed_values();
+
 }
 
 int TaskModel::rowCount(const QModelIndex &parent) const
@@ -80,10 +83,10 @@ bool TaskModel::removeRow(int row, const QModelIndex &parent)
 }
 
 void TaskModel::change(int  index_row, QString arg_task_name,
-                                        QString arg_task_discr,
-                                        QString arg_task_time,
-                                        QString arg_task_date,
-                                        int arg_task_categ_id)
+                       QString arg_task_discr,
+                       QString arg_task_time,
+                       QString arg_task_date,
+                       int arg_task_categ_id)
 {
     removeRow(index_row, QModelIndex());
 
@@ -93,6 +96,47 @@ void TaskModel::change(int  index_row, QString arg_task_name,
     endInsertRows();
     QModelIndex index = createIndex(0, 0, static_cast<void *>(0));
     emit dataChanged(index, index);
+}
+
+void TaskModel::f_add_changed_values(int arg_id)
+{
+    if(arg_id==-1)
+    {
+        add(p_ChangedValues_Name, p_ChangedValues_Discr, p_ChangedValues_Time, p_ChangedValues_Date, p_ChangedValues_Categ_Id);
+    }
+    else
+        change(arg_id,p_ChangedValues_Name, p_ChangedValues_Discr, p_ChangedValues_Time, p_ChangedValues_Date, p_ChangedValues_Categ_Id);
+   f_clear_changed_values();
+
+}
+
+void TaskModel::f_set_changed_values(int arg_id)
+{
+    if(arg_id==-1)
+    {
+        f_clear_changed_values();
+        return;
+    }
+    if(arg_id>m_data.count())
+        return;
+    p_ChangedValues_Name=m_data[arg_id].p_task_name;
+    p_ChangedValues_Discr=m_data[arg_id].p_task_discr;
+    p_ChangedValues_Time=m_data[arg_id].p_task_time.toString();
+    p_ChangedValues_Date=m_data[arg_id].p_task_date.toString();
+    p_ChangedValues_Categ_Id=m_data[arg_id].p_task_categ_id;
+
+
+}
+
+void TaskModel::f_clear_changed_values()
+{
+    p_ChangedValues_Name = "";
+    p_ChangedValues_Discr = "";
+
+    p_ChangedValues_Date = "";
+    p_ChangedValues_Time = "";
+
+    p_ChangedValues_Categ_Id = 0;
 }
 
 bool TaskModel::setData(const QModelIndex &index, const QVariant &value, int role)

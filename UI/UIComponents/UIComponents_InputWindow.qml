@@ -16,7 +16,7 @@ Rectangle {
     property string  p_text: ""
 
     property string binding_prop_name: ""
-    property QtObject binding_object: Component
+    property QtObject binding_object
 
     property bool is_multiline: false
     Binding

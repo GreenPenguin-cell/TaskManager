@@ -7,11 +7,33 @@ Item {
     id:main
     property int p_changed_task_id: -1
     property QtObject dataModel: undefined
+
+
     Rectangle
     {
         id:main_rec
         anchors.fill: parent
         color: "#e1e1b0"
+        UICOmponents_Button
+        {
+            id:but_save
+            width: parent.width/2
+            height: parent.height/15
+            x:0
+            y:parent.height-height
+            text: "Сохранить"
+            onS_triggered: f_save()
+        }
+        UICOmponents_Button
+        {
+            id:but_cancel
+            width: parent.width/2
+            height: parent.height/15
+            x:parent.width/2
+            y:parent.height-height
+            text: "Отмена"
+            onS_triggered: f_cancel()
+        }
         UIComponents_InputWindow
         {
             id:txt_name
@@ -21,6 +43,8 @@ Item {
             height: parent.height/15
             has_header: true
             header_text: "Название задачи"
+            binding_object: dataModel
+            binding_prop_name: "p_ChangedValues_Name"
         }
         UIComponents_InputWindow
         {
@@ -32,6 +56,9 @@ Item {
             has_header: true
             is_multiline: true
             header_text: "Описание задачи"
+            binding_object: dataModel
+            binding_prop_name: "p_ChangedValues_Discr"
+
         }
         ComboBox
         {
@@ -48,6 +75,13 @@ Item {
                 text: "Категория"
             }
         }
+        Binding
+        {
+            target: dataModel
+            property: "p_ChangedValues_Categ_Id"
+            value: categ_list.currentIndex
+        }
+
         //А вот для ввода даты и времени надо будет создать отдельные компоненты, текст временно
         UIComponents_InputWindow
         {
@@ -58,6 +92,8 @@ Item {
             height: parent.height/15
             has_header: true
             header_text: "Время дедлайна"
+            binding_object: dataModel
+            binding_prop_name: "p_ChangedValues_Time"
         }
         UIComponents_InputWindow
         {
@@ -69,70 +105,39 @@ Item {
             has_header: true
             is_multiline: true
             header_text: "Дата дедлайна"
-        }
-        UIComponents_ButtonsPanel
-        {
-            x:0
-            y:parent.height-height
-            width: parent.width
-            height: parent.height/15
-            p_elements_count: 2
-            Component.onCompleted:
-            {
-                f_element_add("Сохранить", "but_save",2)
-                f_element_add("Отмена", "but_cancel",1)
-            }
-        }
-        Connections
-        {
-            //Вызыввается из главного окна сигналом-перенаправителем из
-            //страницы со списком задач при клике на одну из них
-            //arg_but_param
-           target: mainwindow
-           onS_task_click:
-           {
-              if(arg_but_param=="but_save")
-                  f_save()
-              if(arg_but_param=="but_cancel")
-                  f_cancel()
-           }
+            binding_object: dataModel
+            binding_prop_name: "p_ChangedValues_Date"
         }
 
 
 
-        Binding
-        {
-            target:text1
-            property: "text"
-            value: dataModel.p_test[0]
-        }
-
-        Text {
-            id: text1
-            x: 288
-            y: 395
-            width: 118
-            height: 23
-            text: qsTr("Text")
-            font.pixelSize: 12
-        }
     }
     function f_save()
     {
-
+        dataModel.f_add_changed_values(p_changed_task_id)
+        s_task_addClose()
     }
     function f_cancel()
     {
-
+       dataModel.f_clear_changed_values()
+       s_task_addClose()
+    }
+    function f_fill_fields()
+    {
+        if(p_changed_task_id!=-1)
+        {
+            txt_name.p_text = dataModel.p_ChangedValues_Name
+            txt_discr.p_text=dataModel.p_ChangedValues_Discr
+            txt_time.p_text=dataModel.p_ChangedValues_Time
+            txt_date.p_text=dataModel.p_ChangedValues_Date
+            categ_list.currentIndex=dataModel.p_ChangedValues_Categ_Id
+        }
     }
 
     Component.onCompleted:
     {
-        if(p_changed_task_id!=-1)
-        {
-
-        }
-
+        dataModel.f_set_changed_values(p_changed_task_id)
+        f_fill_fields()
     }
 
 }

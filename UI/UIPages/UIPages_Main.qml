@@ -40,7 +40,12 @@ Item {
        onS_task_click:
        {
            pagesDiscripion.f_set_current_page("but_addChange")
-           load_pages.setSource(pagesDiscripion.f_get_current_page_sourse(), {p_changed_task_id:id})
+           load_pages.setSource(pagesDiscripion.f_get_current_page_sourse(), {p_changed_task_id:id, dataModel:dataModel})
+       }
+       onS_task_addClose:
+       {
+           pagesDiscripion.f_set_current_page("but_pageChange_list")
+           f_load_page()
        }
     }
 
