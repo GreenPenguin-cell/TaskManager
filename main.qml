@@ -7,20 +7,25 @@ import "UI/UIComponents"
 import "UI/UIPages"
 //import TaskModel 1.0
 
-Window {
+ApplicationWindow {
     //Главное окно
-    //Тут мы загружаем сразу главную страницу, основная работа на ней
-    //Здесь будут обьявлены сигналы и переменные, которые должны быть видимы всем компонентам
     id:mainwindow
+    visible: true
+    width: 800
+    height: 700
+
     property QtObject dataModel: dataModel
-
-    //Сигнал поступающий с кнопок панелей(Отвечает за смену страниц
-    /*
-      but_add - такой параметр должен приходить с кнопки добавить
-
-      */
-    signal s_but_panel_click(string arg_but_param)
-
+    onClosing:
+    {
+        if(dataModel.get_has_modifications())
+        {
+            close.accepted = false
+            confim_wind.p_text = "Сохранить изменения?"
+            confim_wind.is_DS = false
+            confim_wind.p_object_caller = "wind_close"
+            confim_wind.show()
+        }
+    }
 
     //Обьявляем основную модель, которая сделана как плагин
     TaskModel
@@ -29,58 +34,77 @@ Window {
     }
 
 
+    //Сигнал поступающий с кнопок панелей(Отвечает за смену страниц
+    /*
 
-    //Этот сигнал используется для перенаправления. Когда с ListViewTable приходит сигнал клика
-    //На элемент, страница _TasksList реагирует на него, отправляя этот сигнал
-    //А главная страница уже перехватывает его
+
+      */
+    signal s_but_panel_click(string arg_but_param)
+
+    //Сигнал вызывает
     signal s_task_click(int id)
     //Сигнал вызывается из страницы добавления при отменене
     signal s_task_addClose()
     //Сигнал подтверждения/не подтверждения чего либо
-    signal s_confirm_close(bool arg_res)
+    signal s_confirm_close(bool arg_res, string arg_object_caller)
 
+    UIWindows_Confim
+    {
+        id:confim_wind
+        width:mainwindow.width/1.5
+        height: mainwindow.height/2
+        x:0
+        y:0
+        p_text: ""
+
+    }
     Connections
     {
-        //Вызыввается из главного окна сигналом-перенаправителем из
-        //страницы со списком задач при клике на одну из них
-       target: mainwindow
-       onS_task_click:
-       {
-           pagesDiscripion.f_set_current_page("but_addChange")
-           load_pages.setSource(pagesDiscripion.f_get_current_page_sourse(), {p_changed_task_id:id, dataModel:dataModel})
-       }
-       onS_task_addClose:
-       {
-           pagesDiscripion.f_set_current_page("but_pageChange_list")
-           f_load_page()
-       }
-       onS_but_panel_click:
-       {
-           pagesDiscripion.f_set_current_page(arg_but_param)
-           f_load_page()
-       }
+        target: mainwindow
+        onS_task_click:
+        {
+            pagesDiscripion.f_set_current_page("but_addChange")
+            load_pages.setSource("file:///home/batya/QtProjects/TaskManager/UI/UIPages/"+pagesDiscripion.f_get_current_page_sourse(), {p_changed_task_id:id, dataModel:dataModel})
+        }
+        onS_task_addClose:
+        {
+            pagesDiscripion.f_set_current_page("but_pageChange_list")
+            f_load_page()
+        }
+        onS_but_panel_click:
+        {
+            pagesDiscripion.f_set_current_page(arg_but_param)
+            f_load_page()
+        }
+        onS_confirm_close:
+        {
+            if(arg_object_caller=="wind_close")
+            {
+                dataModel.f_save_data(arg_res)
+                Qt.quit()
+                //mainwindow.close()
+            }
+        }
     }
 
-    visible: true
-    width: 800
-    height: 700
 
-//    Loader
-//    {
-//        id:load_main
-//        anchors.fill: parent
-//        Component.onCompleted:
-//        {
-//            setSource("UI/UIPages/UIPages_Main.qml", {dataModel:dataModel})
-//        }
-//    }
+
+    //    Loader
+    //    {
+    //        id:load_main
+    //        anchors.fill: parent
+    //        Component.onCompleted:
+    //        {
+    //            setSource("UI/UIPages/UIPages_Main.qml", {dataModel:dataModel})
+    //        }
+    //    }
 
 
     Component.onCompleted:
     {
-//        dataModel.add("Commnad", "Alias Command", "15:00", "вт окт. 18 2019", 0)
-//       dataModel.add("Commnad", "Alias Command", "15:00", "22.04.19", 0)
-//        dataModel.add("Commnad", "Alias Command", "15:00", "22.04.19", 0)
+        //        dataModel.add("Commnad", "Alias Command", "15:00", "вт окт. 18 2019", 0)
+        //        dataModel.add("Commnad", "Alias Command", "15:00", "22.04.19", 0)
+        //        dataModel.add("Commnad", "Alias Command", "15:00", "22.04.19", 0)
     }
 
 
@@ -107,17 +131,24 @@ Window {
         y:0
         width: parent.width
         height: parent.height/15
-        p_elements_count: 6
+        p_elements_count: pagesDiscripion.f_get_buts_cnt()
         Component.onCompleted:
         {
+            var id = p_elements_count;
+            for(var i = 0;i<p_elements_count;i++)
+            {
+                f_element_add(pagesDiscripion.f_get_but_text(i), pagesDiscripion.f_get_but_command(i), id)
+                id-=1
+            }
+
             //Каждая кнопка панели создаётся в репитере, и по клику отправляет сигнал с вот этим текстом
             //Текст PageChange значит что надо сменить страницу
-            f_element_add("Задачи", "but_pageChange_list",6)
-            f_element_add("Убить\nВремя", "but_pageChange_game",5)
-            f_element_add("Категория", "but_pageChange_Cat",4)
-            f_element_add("Приоретет", "but_PageChange_Prior",3)
-            f_element_add("Добавить", "but_addChange",2)
-            f_element_add("Настройки", "but_ChangePage_Set",1)
+            //            f_element_add("Задачи", "but_pageChange_list",6)
+            //            f_element_add("Убить\nВремя", "but_pageChange_game",5)
+            //            f_element_add("Категория", "but_pageChange_Cat",4)
+            //            f_element_add("Приоретет", "but_PageChange_Prior",3)
+            //            f_element_add("Добавить", "but_addChange",2)
+            //            f_element_add("Настройки", "but_ChangePage_Set",1)
         }
 
 

@@ -112,15 +112,43 @@ Item {
 
 
     }
+    Connections
+    {
+        target: mainwindow
+        onS_confirm_close:
+        {
+            if(arg_res)
+            {
+                if(arg_object_caller=="task_change")
+                {
+                    dataModel.f_add_changed_values(p_changed_task_id)
+                    s_task_addClose()
+                }
+
+            }
+        }
+    }
+
     function f_save()
     {
-        dataModel.f_add_changed_values(p_changed_task_id)
-        s_task_addClose()
+        if(p_changed_task_id!=-1)
+        {
+            confim_wind.p_text = "Сохранить изменения задачи?"
+            confim_wind.is_DS = false
+            confim_wind.p_object_caller = "task_change"
+            confim_wind.show()
+        }
+        else
+        {
+            dataModel.f_add_changed_values(p_changed_task_id)
+            s_task_addClose()
+        }
+
     }
     function f_cancel()
     {
-       dataModel.f_clear_changed_values()
-       s_task_addClose()
+        dataModel.f_clear_changed_values()
+        s_task_addClose()
     }
     function f_fill_fields()
     {

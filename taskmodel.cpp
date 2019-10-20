@@ -11,6 +11,7 @@ TaskModel::TaskModel(QObject *parent):
     p_categs.append("Говно");
     f_read_data();
 
+    has_modifications = false;
     f_clear_changed_values();
 
 }
@@ -72,11 +73,13 @@ void TaskModel::add(QString arg_task_name,
     //m_data[0] = QString("Size: %1").arg(m_data.size());
     QModelIndex index = createIndex(0, 0, static_cast<void *>(0));
     emit dataChanged(index, index);
+    has_modifications=true;
 }
 
 bool TaskModel::removeRow(int row, const QModelIndex &parent)
 {
 
+    has_modifications=true;
     beginRemoveRows(parent, row,row);
     m_data.removeAt(row);
     endRemoveRows();
@@ -97,6 +100,7 @@ void TaskModel::change(int  index_row, QString arg_task_name,
     endInsertRows();
     QModelIndex index = createIndex(0, 0, static_cast<void *>(0));
     emit dataChanged(index, index);
+    has_modifications=true;
 }
 
 void TaskModel::f_add_changed_values(int arg_id)
@@ -140,8 +144,12 @@ void TaskModel::f_clear_changed_values()
     p_ChangedValues_Categ_Id = 0;
 }
 
-void TaskModel::f_save_data()
+void TaskModel::f_save_data(bool arg_true)
 {
+
+    if(!arg_true)
+        return;
+     //qDebug()<<"tyt";
     p_data_save.setPath("data");
     for(int i =0;i<m_data.count();i++)
     {
@@ -155,10 +163,12 @@ void TaskModel::f_save_data()
     }
     p_data_save.WriteData();
     p_data_save.ClearData();
+    has_modifications=false;
 }
 
 void TaskModel::f_read_data()
 {
+
     if(!QFile::exists("data"))
         return;
     p_data_save.setPath("data");

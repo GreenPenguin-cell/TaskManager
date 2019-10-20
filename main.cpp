@@ -22,6 +22,7 @@ int main(int argc, char *argv[])
     ctxt->setContextProperty("pagesDiscripion", &pagesDiscripion);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+   // QObject::connect(engine,SIGNAL(s_confirm_close(bool)),player,SLOT(slotChangeVolume(quint64)));
 
 
 

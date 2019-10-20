@@ -1,4 +1,6 @@
-import QtQuick 2.0
+import QtQuick 2.6
+import QtQuick.Window 2.2
+import QtQuick.Controls 2.0
 import "../UIPages"
 
 Rectangle {
@@ -43,21 +45,28 @@ Rectangle {
 
 
 
-    UIWindows_Confim
+
+
+    Rectangle
     {
-        id:del_confim
-        width: parent.width/1.5
-        height: parent.height/2
-        p_text: "Вы действительно хотите удалить задачу?"
+        id:rec_scroll
+        x:view.width
+        y:0
+        width: parent.width/25
+        height: parent.height
+        ScrollBar
+        {
 
+        }
     }
-
 
     ListView {
         id: view
 
         anchors.margins: 3
-        anchors.fill: parent
+        //anchors.fill: parent
+        width: parent.width-rec_scroll.width
+        height: parent.height
         spacing: 10
         //width: parent.width
         model: dataSourse
@@ -70,12 +79,14 @@ Rectangle {
 
             property var view: ListView.view
             property var isCurrent: ListView.isCurrentItem
+           // y:rec_upper_panel.height
 
             // width: view.width//view.width
             height: p_element_height//-10
             UICOmponents_Button
             {
                 text: ""//model.TaskNameRole
+
                 width: p_element_width
                 height: p_element_height
                 border.width: 2
@@ -99,7 +110,10 @@ Rectangle {
                     y:3
                     onS_triggered:
                     {
-                        del_confim.show()
+                        confim_wind.p_text="Вы действительно\n хотите удалить задачу?"
+                        confim_wind.is_DS=false
+                        confim_wind.p_object_caller="task_del"
+                        confim_wind.show()
                         delId=model.index
                         //view.currentIndex = model.index
                         //dataModel.removeRow(model.index, dataModel)
@@ -109,14 +123,17 @@ Rectangle {
                         target: mainwindow
                         onS_confirm_close:
                         {
-                            //console.log(view.currentIndex)
-                            if(arg_res)
+                            if(arg_object_caller=="task_del")
                             {
-                                if(delId!=-1)
+                                //console.log(view.currentIndex)
+                                if(arg_res)
                                 {
-                                    dataModel.removeRow(delId, dataModel)
-                                    delId=-1
+                                    if(delId!=-1)
+                                    {
+                                        dataModel.removeRow(delId, dataModel)
+                                    }
                                 }
+                                delId=-1
                             }
                         }
                     }

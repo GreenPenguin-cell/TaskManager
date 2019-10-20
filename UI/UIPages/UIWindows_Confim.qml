@@ -7,6 +7,8 @@ Window {
     //Определяет режим - подтверждение или предупреждение что действие невозможно
     property bool is_DS: false
     property string p_text: ""
+    //По этому обьекты -в вызыватели определяют им это или нет
+    property string p_object_caller
     title: "Подтверждение"
 
     Rectangle
@@ -35,7 +37,9 @@ Window {
             text:"Ок"
             onS_triggered:
             {
-                s_confirm_close(true)
+                s_confirm_close(true, p_object_caller)
+                console.log(p_object_caller)
+
                 close()
             }
         }
@@ -49,7 +53,7 @@ Window {
             text:"Отмена"
             onS_triggered:
             {
-                s_confirm_close(false)
+                s_confirm_close(false,p_object_caller)
                 close()
             }
         }

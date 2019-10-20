@@ -139,9 +139,14 @@ public:
     //Устанавливает значения пустыми
     Q_INVOKABLE void f_clear_changed_values();
     //Сохраняет данные
-    Q_INVOKABLE void f_save_data();
+    Q_INVOKABLE void f_save_data(bool arg_true = true);
     //Читает данные
     Q_INVOKABLE void f_read_data();
+    //Возвращает наличие/отсутствие изменений
+    Q_INVOKABLE bool get_has_modifications()
+    {
+        return has_modifications;
+    }
 
 signals:
     void s_p_categsChanged();
@@ -161,6 +166,7 @@ private:
     int p_ChangedValues_Categ_Id;
     QStringList p_categs;
     MihaFileObject p_data_save;
+    bool has_modifications;
 
 
 };

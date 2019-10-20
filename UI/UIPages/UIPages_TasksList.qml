@@ -26,7 +26,7 @@ Item {
         height: parent.height-upper_panel.height
         dataSourse: dataModel
         p_element_height: parent.height/5
-        p_element_width: parent.width
+        p_element_width: width
         Component.onCompleted:
         {
             data_view.f_column_add("Задача")
