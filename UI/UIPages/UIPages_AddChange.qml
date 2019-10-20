@@ -103,7 +103,7 @@ Item {
             width: parent.width/1.3
             height: parent.height/15
             has_header: true
-            is_multiline: true
+            is_multiline: false
             header_text: "Дата дедлайна"
             binding_object: dataModel
             binding_prop_name: "p_ChangedValues_Date"
