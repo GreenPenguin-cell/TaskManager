@@ -9,8 +9,9 @@ TaskModel::TaskModel(QObject *parent):
     //qDebug()<<QDate::currentDate().toString();
     p_categs.append("Хуета");
     p_categs.append("Говно");
+    f_read_data();
 
-   f_clear_changed_values();
+    f_clear_changed_values();
 
 }
 
@@ -137,6 +138,39 @@ void TaskModel::f_clear_changed_values()
     p_ChangedValues_Time = "";
 
     p_ChangedValues_Categ_Id = 0;
+}
+
+void TaskModel::f_save_data()
+{
+    p_data_save.setPath("data");
+    for(int i =0;i<m_data.count();i++)
+    {
+        p_data_save.CreateOrClearCurrentObject();
+        p_data_save.AddValueToCurrentObject(m_data[i].p_task_name);
+        p_data_save.AddValueToCurrentObject(m_data[i].p_task_discr);
+        p_data_save.AddValueToCurrentObject(m_data[i].p_task_time.toString());
+        p_data_save.AddValueToCurrentObject(m_data[i].p_task_date.toString());
+        p_data_save.AddValueToCurrentObject(QString::number(m_data[i].p_task_categ_id));
+        p_data_save.WriteCurrentObject();
+    }
+    p_data_save.WriteData();
+    p_data_save.ClearData();
+}
+
+void TaskModel::f_read_data()
+{
+    if(!QFile::exists("data"))
+        return;
+    p_data_save.setPath("data");
+    p_data_save.ReadDataFromFile();
+    for(int i=0;i<p_data_save.getCountObjects();i++)
+    {
+        QStringList dat = p_data_save.getOneFileObject(i);
+        add(dat[0],dat[1],dat[2],dat[3],dat[4].toInt());
+
+    }
+    p_data_save.ClearData();
+
 }
 
 bool TaskModel::setData(const QModelIndex &index, const QVariant &value, int role)

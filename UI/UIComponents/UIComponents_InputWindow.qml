@@ -19,6 +19,7 @@ Rectangle {
     property QtObject binding_object
 
     property bool is_multiline: false
+    property bool is_read_only: false
     Binding
     {
         id:binding
@@ -38,6 +39,7 @@ Rectangle {
         font.pixelSize: parent.height/2
         text:"<Enter text>"
         onTextChanged: p_message = text_inp.text
+        readOnly: is_read_only
         Text
         {
             id:header
@@ -59,6 +61,10 @@ Rectangle {
             text_inp.font.pixelSize=inp_rec.height/6
     }
 
+    function f_set_textSize(arg_size)
+    {
+        text_inp.font.pixelSize=arg_size
+    }
 
     function f_get_text()
     {
@@ -85,11 +91,15 @@ Rectangle {
     {
         text_inp.text = arg_text
     }
-    function f_set_size(arg_width, arg_heigth)
+    function get_content_width()
     {
-        inp_rec.width = arg_width
-        inp_rec.height = arg_heigth
+       return text_inp.contentWidth
     }
+    function get_content_heigth()
+    {
+       return text_inp.contentHeight
+    }
+
 
 
 }

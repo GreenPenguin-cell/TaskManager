@@ -26,6 +26,9 @@ Window {
     signal s_task_click(int id)
     //Сигнал вызывается из страницы добавления при отменене
     signal s_task_addClose()
+    //Сигнал подтверждения/не подтверждения чего либо
+    signal s_confirm_close(bool arg_res)
+
 
 
     visible: true

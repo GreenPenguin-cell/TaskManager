@@ -5,6 +5,9 @@
 #include "QAbstractItemModel"
 #include "QMap"
 #include "QDateTime"
+#include "mihafileobject.h"
+#include "QString"
+#include "QStringList"
 
 class TaskModel : public QAbstractListModel
 {
@@ -13,7 +16,6 @@ class TaskModel : public QAbstractListModel
 public:
 
     Q_PROPERTY(QStringList p_categs READ get_p_categs WRITE set_p_categs NOTIFY s_p_categsChanged)
-
     Q_PROPERTY(QString p_ChangedValues_Name READ get_p_test WRITE set_p_test NOTIFY s_p_testChanged)
     Q_PROPERTY(QString p_ChangedValues_Discr READ get_p_ChangedValues_Discr WRITE set_p_ChangedValues_Discr NOTIFY s_p_ChangedValues_DiscrChanged)
     Q_PROPERTY(QString p_ChangedValues_Time READ get_p_ChangedValues_Time WRITE set_p_ChangedValues_Time NOTIFY s_p_ChangedValues_TimeChanged)
@@ -84,6 +86,16 @@ public:
             p_task_time=QTime::fromString(task_time);
             p_task_categ_id=task_categ_id;
         }
+        Command(QStringList arg_data)
+        {
+           if(arg_data.count()!=5)
+               return;
+           this->p_task_discr = arg_data[1];
+           this->p_task_name = arg_data[0];
+           p_task_date=QDate::fromString(arg_data[3]);
+           p_task_time=QTime::fromString(arg_data[2]);
+           p_task_categ_id=arg_data[4].toInt();
+        }
         QString p_task_name;
         QString p_task_discr;
         QTime p_task_time;
@@ -126,6 +138,10 @@ public:
     Q_INVOKABLE void f_set_changed_values(int arg_id = -1);
     //Устанавливает значения пустыми
     Q_INVOKABLE void f_clear_changed_values();
+    //Сохраняет данные
+    Q_INVOKABLE void f_save_data();
+    //Читает данные
+    Q_INVOKABLE void f_read_data();
 
 signals:
     void s_p_categsChanged();
@@ -144,6 +160,8 @@ private:
     QString p_ChangedValues_Date;
     int p_ChangedValues_Categ_Id;
     QStringList p_categs;
+    MihaFileObject p_data_save;
+
 
 };
 

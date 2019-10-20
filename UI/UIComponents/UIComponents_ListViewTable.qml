@@ -1,27 +1,28 @@
 import QtQuick 2.0
+import "../UIPages"
 
 Rectangle {
-//    Image {
-//        id: background
-//        x:0
-//        y:0
-//        source: "../UIFiles/s1200.jpeg"
-//        width: rec_view.width
-//        height: rec_view.height
-//    }
+    //    Image {
+    //        id: background
+    //        x:0
+    //        y:0
+    //        source: "../UIFiles/s1200.jpeg"
+    //        width: rec_view.width
+    //        height: rec_view.height
+    //    }
 
     id:rec_view
     width: parent.width/1.4
     height: parent.height/1.4
     color: "#e1e1b0"
-//        Image {
-//            id: background
-//            x:0
-//            y:0
-//            source: "back.jpg"
-//            width: rec_view.width
-//            height: rec_view.height
-//        }
+    //        Image {
+    //            id: background
+    //            x:0
+    //            y:0
+    //            source: "back.jpg"
+    //            width: rec_view.width
+    //            height: rec_view.height
+    //        }
     property QtObject dataSourse: undefined //Хранит модель данных
     property  int  column_count: 0
     property  int p_current_index
@@ -29,8 +30,10 @@ Rectangle {
     property int p_element_width: 100
     property int p_element_height: 70
 
+    property int delId: -1
+
     //Вызывается при нажатии на элемент
-      signal s_model_element_click(int id)
+    signal s_model_element_click(int id)
 
     ListModel
     {
@@ -39,6 +42,15 @@ Rectangle {
     }
 
 
+
+    UIWindows_Confim
+    {
+        id:del_confim
+        width: parent.width/1.5
+        height: parent.height/2
+        p_text: "Вы действительно хотите удалить задачу?"
+
+    }
 
 
     ListView {
@@ -59,7 +71,7 @@ Rectangle {
             property var view: ListView.view
             property var isCurrent: ListView.isCurrentItem
 
-           // width: view.width//view.width
+            // width: view.width//view.width
             height: p_element_height//-10
             UICOmponents_Button
             {
@@ -69,13 +81,47 @@ Rectangle {
                 border.width: 2
                 color: focus ? "#797a58":"#bebe7d"
                 border.color: "#797a58"
-//                p_has_image: true
-//                p_image_path: "element.jpeg"
+                //                p_has_image: true
+                //                p_image_path: "element.jpeg"
                 onS_triggered:
                 {
                     view.currentIndex = model.index
                     s_model_element_click(view.currentIndex)
                 }
+                UICOmponents_Button
+                {
+                    id:but_del
+                    p_has_image: true
+                    p_image_path: "del.jpg"
+                    width: parent.height/5
+                    height: parent.height/5
+                    x:parent.width-width-3
+                    y:3
+                    onS_triggered:
+                    {
+                        del_confim.show()
+                        delId=model.index
+                        //view.currentIndex = model.index
+                        //dataModel.removeRow(model.index, dataModel)
+                    }
+                    Connections
+                    {
+                        target: mainwindow
+                        onS_confirm_close:
+                        {
+                            //console.log(view.currentIndex)
+                            if(arg_res)
+                            {
+                                if(delId!=-1)
+                                {
+                                    dataModel.removeRow(delId, dataModel)
+                                    delId=-1
+                                }
+                            }
+                        }
+                    }
+                }
+
                 Text
                 {
 

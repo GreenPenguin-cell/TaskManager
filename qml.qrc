@@ -12,8 +12,10 @@
         <file>UI/UIComponents/UIComponents_ButtonsPanel.qml</file>
         <file>UI/UIComponents/back.jpg</file>
         <file>UI/UIComponents/element.jpeg</file>
+        <file>UI/UIComponents/del.jpg</file>
         <file>UI/UIPages/UIPages_AddChange.qml</file>
         <file>UI/UIPages/UIPages_Game.qml</file>
         <file>UI/UIPages/UIPages_Settings.qml</file>
+        <file>UI/UIPages/UIWindows_Confim.qml</file>
     </qresource>
 </RCC>
