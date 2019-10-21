@@ -3,6 +3,7 @@
 #include "taskmodel.h"
 #include "QQmlContext"
 #include "pagesdiscripion.h"
+#include "mtime.h"
 
 
 int main(int argc, char *argv[])
@@ -12,6 +13,8 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
 
+   MTime task_timer;
+   //task_timer.start();
 
     qmlRegisterType<TaskModel>("dataModel", 1,0, "TaskModel");
 
@@ -20,6 +23,9 @@ int main(int argc, char *argv[])
     PagesDiscripion pagesDiscripion;
     QQmlContext *ctxt = engine.rootContext();
     ctxt->setContextProperty("pagesDiscripion", &pagesDiscripion);
+    QQmlContext *ctxt2 = engine.rootContext();
+        ctxt2->setContextProperty("task_timer", &task_timer);
+
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
    // QObject::connect(engine,SIGNAL(s_confirm_close(bool)),player,SLOT(slotChangeVolume(quint64)));

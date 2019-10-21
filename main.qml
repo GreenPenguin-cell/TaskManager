@@ -32,6 +32,11 @@ ApplicationWindow {
     {
         id:dataModel
     }
+    Component.onCompleted:
+    {
+        task_timer.set_material(dataModel)
+        task_timer.start()//run()
+    }
 
 
     //Сигнал поступающий с кнопок панелей(Отвечает за смену страниц
@@ -58,6 +63,19 @@ ApplicationWindow {
         p_text: ""
 
     }
+    Connections
+    {
+        target: dataModel
+        onS_task_deadLine:
+        {
+            confim_wind.is_DS=true
+            confim_wind.p_text = "Дедлайн задачи "+ arg_task_name
+            confim_wind.p_object_caller = "task_deadLine"
+            confim_wind.show()
+
+        }
+    }
+
     Connections
     {
         target: mainwindow
@@ -100,12 +118,7 @@ ApplicationWindow {
     //    }
 
 
-    Component.onCompleted:
-    {
-        //        dataModel.add("Commnad", "Alias Command", "15:00", "вт окт. 18 2019", 0)
-        //        dataModel.add("Commnad", "Alias Command", "15:00", "22.04.19", 0)
-        //        dataModel.add("Commnad", "Alias Command", "15:00", "22.04.19", 0)
-    }
+
 
 
 

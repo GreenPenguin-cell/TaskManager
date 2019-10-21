@@ -14,6 +14,7 @@ TaskModel::TaskModel(QObject *parent):
     has_modifications = false;
     f_clear_changed_values();
 
+
 }
 
 int TaskModel::rowCount(const QModelIndex &parent) const
@@ -181,6 +182,12 @@ void TaskModel::f_read_data()
     }
     p_data_save.ClearData();
 
+}
+
+void TaskModel::sl_task_deadLine(int arg_task_id)
+{
+   emit s_task_deadLine(m_data[arg_task_id].p_task_name);
+   removeRow(arg_task_id, QModelIndex());
 }
 
 bool TaskModel::setData(const QModelIndex &index, const QVariant &value, int role)

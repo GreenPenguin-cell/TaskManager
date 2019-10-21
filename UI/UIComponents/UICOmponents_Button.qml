@@ -1,6 +1,8 @@
 import QtQuick 2.6
 import QtQuick.Window 2.2
 import QtQuick.Controls 1.4
+//import QtGraphicalEffects 1.0
+
 
 Rectangle {
     id:but_rec
@@ -10,6 +12,7 @@ Rectangle {
 
 
     color : focus ? "#5b765d" : "#9aa99b"
+
     border.color: "#5b765d"
     border.width: 2
     property string p_image_path: ""
@@ -26,7 +29,9 @@ Rectangle {
         source: p_image_path
         width: but_rec.width
         height: but_rec.height
+
     }
+
 
     MouseArea
     {

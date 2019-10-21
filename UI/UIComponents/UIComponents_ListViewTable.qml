@@ -87,7 +87,7 @@ Rectangle {
             {
                 text: ""//model.TaskNameRole
 
-                width: p_element_width
+                width: p_element_width-rec_scroll.width
                 height: p_element_height
                 border.width: 2
                 color: focus ? "#797a58":"#bebe7d"
@@ -108,6 +108,7 @@ Rectangle {
                     height: parent.height/5
                     x:parent.width-width-3
                     y:3
+                    //radius: 250
                     onS_triggered:
                     {
                         confim_wind.p_text="Вы действительно\n хотите удалить задачу?"

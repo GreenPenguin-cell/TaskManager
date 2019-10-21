@@ -21,6 +21,19 @@ public:
     Q_PROPERTY(QString p_ChangedValues_Time READ get_p_ChangedValues_Time WRITE set_p_ChangedValues_Time NOTIFY s_p_ChangedValues_TimeChanged)
     Q_PROPERTY(QString p_ChangedValues_Date READ get_p_ChangedValues_Date WRITE set_p_ChangedValues_Date NOTIFY s_p_ChangedValues_DateChanged)
     Q_PROPERTY(int p_ChangedValues_Categ_Id READ get_p_ChangedValues_Categ_Id WRITE set_p_ChangedValues_Categ_Id NOTIFY s_p_ChangedValues_Categ_IdChanged)
+    Q_PROPERTY(QString p_sound_path READ get_p_sound_path WRITE set_p_sound_path NOTIFY s_p_sound_pathChanged)
+   //Хранит путь к звуковому файлу, который проигрывается при дедлайней задач
+
+
+    void set_p_sound_path(QString value)
+    {
+        p_sound_path = value;
+    }
+    QString get_p_sound_path()
+    {
+        return p_sound_path;
+    }
+
     //Хранит список категорий
     void set_p_categs(QStringList value)
     {
@@ -147,23 +160,38 @@ public:
     {
         return has_modifications;
     }
+    //Получить число строк без модел-индекса
+    Q_INVOKABLE int get_rowCount()
+    {
+        return m_data.count();
+    }
+    //пока публичная, дальше придумаю как скрыть
+     QList<Command> m_data;
 
 signals:
+    //Сигналы для свойств
     void s_p_categsChanged();
     void s_p_testChanged();
-
     void s_p_ChangedValues_DiscrChanged();
     void s_p_ChangedValues_TimeChanged();
     void s_p_ChangedValues_DateChanged();
     void s_p_ChangedValues_Categ_IdChanged();
+    void s_p_sound_pathChanged();
+    //Отправка в QML сигнала о дедлайней задачи
+    void s_task_deadLine(QString arg_task_name);
+public slots:
+    //Подаем сигнал о дедлайне задачи
+    void sl_task_deadLine(int arg_task_id);
 
 private:
-    QList<Command> m_data;
+
+    //MTime p_timer;
     QString p_ChangedValues_Name;
     QString p_ChangedValues_Discr;
     QString p_ChangedValues_Time;
     QString p_ChangedValues_Date;
     int p_ChangedValues_Categ_Id;
+    QString p_sound_path;
     QStringList p_categs;
     MihaFileObject p_data_save;
     bool has_modifications;

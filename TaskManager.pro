@@ -15,7 +15,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp \
     taskmodel.cpp \
     pagesdiscripion.cpp \
-    mihafileobject.cpp
+    mihafileobject.cpp \
+    mtime.cpp
 
 RESOURCES += qml.qrc
 
@@ -33,4 +34,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     taskmodel.h \
     pagesdiscripion.h \
-    mihafileobject.h
+    mihafileobject.h \
+    mtime.h
