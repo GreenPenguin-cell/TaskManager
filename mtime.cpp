@@ -7,12 +7,13 @@ MTime::MTime()
 {
     TaskModel mod;
     set_material(&mod);
+    p_skip_id=-1;
 }
 
 void MTime::run()
 {
 
-    int skip_id=-1;
+
     scan = true;
     while(scan)
     {
@@ -23,10 +24,10 @@ void MTime::run()
         {
              QTime taskTime = material->m_data[i].p_task_time;
              //qDebug()<<taskTime;
-             if(taskTime==QTime::currentTime()&&(skip_id!=i))
+             if(taskTime==QTime::currentTime()&&(p_skip_id!=i))
              {
-                 qDebug()<<i;
-                 skip_id=i;
+                 //qDebug()<<i;
+                 p_skip_id=i;
                  emit sendTaskSIgnal(i);
              }
         }

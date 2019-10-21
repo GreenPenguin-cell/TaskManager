@@ -11,7 +11,7 @@ ApplicationWindow {
     //Главное окно
     id:mainwindow
     visible: true
-    width: 800
+    width: 400
     height: 700
 
     property QtObject dataModel: dataModel
@@ -72,6 +72,8 @@ ApplicationWindow {
             confim_wind.p_text = "Дедлайн задачи "+ arg_task_name
             confim_wind.p_object_caller = "task_deadLine"
             confim_wind.show()
+            task_timer.sl_task_del_complete()
+
 
         }
     }
@@ -102,6 +104,7 @@ ApplicationWindow {
                 Qt.quit()
                 //mainwindow.close()
             }
+
         }
     }
 

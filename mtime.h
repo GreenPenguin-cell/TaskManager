@@ -24,9 +24,15 @@ signals:
     void sendTimeToQml(QString time);
 
 public slots:
+    //По этому слоту индексу задачи, который надо пропускать снова присваивается -1
+    void sl_task_del_complete()
+    {
+        p_skip_id=-1;
+    }
 
 private:
     bool scan;
+    int p_skip_id;
 };
 
 #endif // MTIME_H
