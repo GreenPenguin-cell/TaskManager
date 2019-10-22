@@ -11,8 +11,30 @@ Window {
     property string p_object_caller
     title: "Подтверждение"
 
+
+    onP_object_callerChanged:
+    {
+        if(p_object_caller=="check_correct")
+        {
+            but_ok.visible=false
+            but_cancel.x = rec_main.width/2-but_cancel.width/2
+            but_cancel.text = "Ок"
+            title="Предупреждение"
+        }
+        else
+        {
+            but_ok.visible=true
+            but_ok.width=rec_main.width/2
+            but_ok.x=0
+            but_cancel.x = but_ok.width
+            but_cancel.text = "Отмена"
+            title="Подтверждение"
+        }
+    }
+
     Rectangle
     {
+        id:rec_main
         anchors.fill: parent
         border.width: 2
         color:"#e1e1b0"
@@ -48,7 +70,7 @@ Window {
             id:but_cancel
             width: parent.width/2
             height: parent.height/7
-            x:but_ok.width
+            x:parent.width/2//but_ok.width
             y:parent.height-height
             text:"Отмена"
             onS_triggered:
@@ -57,15 +79,27 @@ Window {
                 close()
             }
         }
+
         Component.onCompleted:
         {
+
             if(is_DS)
             {
                 but_ok.visible=false
-                but_cancel.x = parent.width/2-but_cancel.width/2
+                but_cancel.x = rec_main.width/2-but_cancel.width/2
                 but_cancel.text = "Ок"
                 title="Предупреждение"
             }
+            else
+            {
+                but_ok.visible=true
+                but_ok.width=parent.width/2
+                but_ok.x=0
+                but_cancel.x = but_ok.width
+                but_cancel.text = "Отмена"
+                title="Подтверждение"
+            }
+            show()
 
         }
 

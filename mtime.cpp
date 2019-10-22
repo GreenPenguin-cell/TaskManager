@@ -1,6 +1,7 @@
 #include "mtime.h"
 #include "QTime"
 #include "QDebug"
+#include "QDateTime"
 
 
 MTime::MTime()
@@ -9,6 +10,7 @@ MTime::MTime()
     set_material(&mod);
     p_skip_id=-1;
 }
+//Date format пн окт. 21 2019
 
 void MTime::run()
 {
@@ -23,8 +25,11 @@ void MTime::run()
         for(int i=0;i<material->get_rowCount();i++)
         {
              QTime taskTime = material->m_data[i].p_task_time;
+             QDate taskDate = material->m_data[i].p_task_date;
+
+
              //qDebug()<<taskTime;
-             if(taskTime==QTime::currentTime()&&(p_skip_id!=i))
+             if((taskTime==QTime::currentTime()&&(p_skip_id!=i))&(taskDate==QDate::currentDate()))
              {
                  //qDebug()<<i;
                  p_skip_id=i;

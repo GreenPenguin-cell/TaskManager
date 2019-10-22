@@ -20,6 +20,7 @@ Rectangle {
 
     property bool is_multiline: false
     property bool is_read_only: false
+    signal s_text_changed
     Binding
     {
         id:binding
@@ -38,8 +39,9 @@ Rectangle {
         height: parent.height-3
         font.pixelSize: parent.height/2
         text:"<Enter text>"
-        onTextChanged: p_message = text_inp.text
+        //onTextChanged: p_message = text_inp.text
         readOnly: is_read_only
+        onTextChanged: s_text_changed()
         Text
         {
             id:header

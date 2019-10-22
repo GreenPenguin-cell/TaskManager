@@ -7,6 +7,7 @@ Item {
     id:main
     property int p_changed_task_id: -1
     property QtObject dataModel: undefined
+    property bool flag_data_correct: false
 
 
     Rectangle
@@ -22,7 +23,7 @@ Item {
             x:0
             y:parent.height-height
             text: "Сохранить"
-            onS_triggered: f_save()
+            onS_triggered: f_check_correct()//f_save()
         }
         UICOmponents_Button
         {
@@ -83,18 +84,29 @@ Item {
         }
 
         //А вот для ввода даты и времени надо будет создать отдельные компоненты, текст временно
-        UIComponents_InputWindow
+        //        UIComponents_InputWindow
+        //        {
+        //            id:txt_time
+        //            x:parent.width/20
+        //            y:parent.height/1.8
+        //            width: parent.width/1.3
+        //            height: parent.height/15
+        //            has_header: true
+        //            header_text: "Время дедлайна"
+        //            binding_object: dataModel
+        //            binding_prop_name: "p_ChangedValues_Time"
+        //        }
+        UIComponents_TimeSelecter
         {
             id:txt_time
             x:parent.width/20
             y:parent.height/1.8
             width: parent.width/1.3
             height: parent.height/15
-            has_header: true
-            header_text: "Время дедлайна"
-            binding_object: dataModel
-            binding_prop_name: "p_ChangedValues_Time"
+            binding_object:dataModel
+            binding_property_name:"p_ChangedValues_Time"
         }
+
         UIComponents_InputWindow
         {
             id:txt_date
@@ -145,6 +157,23 @@ Item {
         }
 
     }
+    function f_check_correct()
+    {
+        if(txt_name.f_get_text()==='Fucking')
+        {
+
+            confim_wind.is_DS = true
+            confim_wind.p_object_caller = "check_correct"
+            confim_wind.p_text = "MIR IST KALT(("
+            confim_wind.show()
+            flag_data_correct=false
+        }
+        else
+            flag_data_correct=true
+        if(flag_data_correct)
+            f_save()
+    }
+
     function f_cancel()
     {
         dataModel.f_clear_changed_values()
@@ -156,7 +185,7 @@ Item {
         {
             txt_name.p_text = dataModel.p_ChangedValues_Name
             txt_discr.p_text=dataModel.p_ChangedValues_Discr
-            txt_time.p_text=dataModel.p_ChangedValues_Time
+            txt_time.f_set_time(dataModel.p_ChangedValues_Time)
             txt_date.p_text=dataModel.p_ChangedValues_Date
             categ_list.currentIndex=dataModel.p_ChangedValues_Categ_Id
         }

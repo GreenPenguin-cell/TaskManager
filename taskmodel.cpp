@@ -13,6 +13,9 @@ TaskModel::TaskModel(QObject *parent):
 
     has_modifications = false;
     f_clear_changed_values();
+    //qDebug()<<QDate::currentDate().toString();
+    qDebug()<<QTime::currentTime().toString();
+
 
 
 }

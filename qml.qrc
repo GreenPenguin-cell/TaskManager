@@ -17,5 +17,6 @@
         <file>UI/UIPages/UIPages_Game.qml</file>
         <file>UI/UIPages/UIPages_Settings.qml</file>
         <file>UI/UIPages/UIWindows_Confim.qml</file>
+        <file>UI/UIComponents/UIComponents_TimeSelecter.qml</file>
     </qresource>
 </RCC>
