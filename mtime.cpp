@@ -26,12 +26,10 @@ void MTime::run()
         {
              QTime taskTime = material->m_data[i].p_task_time;
              QDate taskDate = material->m_data[i].p_task_date;
-
-
              //qDebug()<<taskTime;
              if((taskTime==QTime::currentTime()&&(p_skip_id!=i))&(taskDate==QDate::currentDate()))
              {
-                 //qDebug()<<i;
+                 qDebug()<<i;
                  p_skip_id=i;
                  emit sendTaskSIgnal(i);
              }

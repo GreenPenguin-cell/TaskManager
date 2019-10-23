@@ -8,6 +8,7 @@
 #include "mihafileobject.h"
 #include "QString"
 #include "QStringList"
+#include "QDebug"
 
 class TaskModel : public QAbstractListModel
 {
@@ -64,6 +65,8 @@ public:
 
     void set_p_ChangedValues_Date(QString value)
     {
+//        int pos = value.indexOf("GMT");
+//        value.remove(pos-1, value.length()-1);
         p_ChangedValues_Date=value;
     }
     QString get_p_ChangedValues_Date()
@@ -195,6 +198,8 @@ private:
     QStringList p_categs;
     MihaFileObject p_data_save;
     bool has_modifications;
+    //Проигрывает звук при дедлайне
+    void f_play_sound();
 
 
 };

@@ -14,7 +14,7 @@ Window {
 
     onP_object_callerChanged:
     {
-        if(p_object_caller=="check_correct")
+        if(p_object_caller=="warning")
         {
             but_ok.visible=false
             but_cancel.x = rec_main.width/2-but_cancel.width/2

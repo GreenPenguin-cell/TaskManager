@@ -1,5 +1,6 @@
 #include "taskmodel.h"
 #include "QDebug"
+#include "QtMultimedia/QMediaPlayer"
 
 TaskModel::TaskModel(QObject *parent):
     QAbstractListModel(parent)
@@ -14,7 +15,8 @@ TaskModel::TaskModel(QObject *parent):
     has_modifications = false;
     f_clear_changed_values();
     //qDebug()<<QDate::currentDate().toString();
-    qDebug()<<QTime::currentTime().toString();
+    //qDebug()<<QTime::currentTime().toString();
+    qDebug()<<QDateTime::currentDateTime().toString();
 
 
 
@@ -105,17 +107,30 @@ void TaskModel::change(int  index_row, QString arg_task_name,
     QModelIndex index = createIndex(0, 0, static_cast<void *>(0));
     emit dataChanged(index, index);
     has_modifications=true;
+    qDebug()<<m_data[index_row].p_task_time;
 }
 
 void TaskModel::f_add_changed_values(int arg_id)
 {
     if(arg_id==-1)
     {
+//        qDebug()<<"this";
+//        QDateTime val;
+//        val=QDateTime::fromString(p_ChangedValues_Date);
+
+//        qDebug()<<p_ChangedValues_Date;
         add(p_ChangedValues_Name, p_ChangedValues_Discr, p_ChangedValues_Time, p_ChangedValues_Date, p_ChangedValues_Categ_Id);
     }
     else
+    {
+//        qDebug()<<"this";
+//        QDateTime val;
+//        val=QDateTime::fromString(p_ChangedValues_Date);
+
+//        qDebug()<<p_ChangedValues_Date;
         change(arg_id,p_ChangedValues_Name, p_ChangedValues_Discr, p_ChangedValues_Time, p_ChangedValues_Date, p_ChangedValues_Categ_Id);
-   f_clear_changed_values();
+    }
+    f_clear_changed_values();
 
 }
 
@@ -131,7 +146,10 @@ void TaskModel::f_set_changed_values(int arg_id)
     p_ChangedValues_Name=m_data[arg_id].p_task_name;
     p_ChangedValues_Discr=m_data[arg_id].p_task_discr;
     p_ChangedValues_Time=m_data[arg_id].p_task_time.toString();
-    p_ChangedValues_Date=m_data[arg_id].p_task_date.toString();
+    QDateTime val;
+    val.setTime(m_data[arg_id].p_task_time);
+    val.setDate(m_data[arg_id].p_task_date);
+    p_ChangedValues_Date=val.toString();//m_data[arg_id].p_task_date.toString();
     p_ChangedValues_Categ_Id=m_data[arg_id].p_task_categ_id;
 
 
@@ -153,7 +171,7 @@ void TaskModel::f_save_data(bool arg_true)
 
     if(!arg_true)
         return;
-     //qDebug()<<"tyt";
+    //qDebug()<<"tyt";
     p_data_save.setPath("data");
     for(int i =0;i<m_data.count();i++)
     {
@@ -189,8 +207,18 @@ void TaskModel::f_read_data()
 
 void TaskModel::sl_task_deadLine(int arg_task_id)
 {
-   emit s_task_deadLine(m_data[arg_task_id].p_task_name);
-   removeRow(arg_task_id, QModelIndex());
+    emit s_task_deadLine(m_data[arg_task_id].p_task_name);
+    f_play_sound();
+    removeRow(arg_task_id, QModelIndex());
+}
+
+void TaskModel::f_play_sound()
+{
+    QMediaPlayer player;// = new QMediaPlayer;
+    // ...
+    player.setMedia(QUrl::fromLocalFile("sound.mp3"));
+    player.setVolume(50);
+    player.play();
 }
 
 bool TaskModel::setData(const QModelIndex &index, const QVariant &value, int role)

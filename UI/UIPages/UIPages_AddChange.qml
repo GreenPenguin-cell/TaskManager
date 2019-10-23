@@ -107,18 +107,45 @@ Item {
             binding_property_name:"p_ChangedValues_Time"
         }
 
-        UIComponents_InputWindow
+//        UIComponents_InputWindow
+//        {
+//            id:txt_date
+//            x:parent.width/20
+//            y:parent.height/1.5
+//            width: parent.width/1.3
+//            height: parent.height/15
+//            has_header: true
+//            is_multiline: false
+//            header_text: "Дата дедлайна"
+//            binding_object: dataModel
+//            binding_prop_name: "p_ChangedValues_Date"
+//        }
+        //        Calendar
+        //        {
+        //            id:date_selecter
+        //            x:parent.width/2-width/1.1
+        //            y:parent.height-height-but_cancel.height
+        //            width: parent.width/2
+        //            height: parent.height/3-but_cancel.height
+        //            Component.onCompleted:
+        //            {
+        //                console.log(date_selecter.selectedDate)
+        //            }
+
+        //            //Date format пн окт. 21 2019
+        //        }
+        UIComponents_DateSelecter
         {
-            id:txt_date
-            x:parent.width/20
-            y:parent.height/1.5
-            width: parent.width/1.3
-            height: parent.height/15
-            has_header: true
-            is_multiline: false
-            header_text: "Дата дедлайна"
-            binding_object: dataModel
-            binding_prop_name: "p_ChangedValues_Date"
+            id:date_selecter
+            x:0//parent.width/2-width/1.1
+            y:parent.height-height-but_cancel.height*2
+            width: parent.width//1.5
+            height: parent.height/1.5//-but_cancel.height
+            p_width: parent.width//1.5
+            p_height: parent.height/1.5//3-but_cancel.height
+            p_binding_object: dataModel
+            p_binding_property: "p_ChangedValues_Date"
+
         }
 
 
@@ -156,15 +183,17 @@ Item {
             s_task_addClose()
         }
 
+        //date_selecter.visi
+
     }
     function f_check_correct()
     {
-        if(txt_name.f_get_text()==='Fucking')
+        if(txt_name.f_get_text()==='Wer ist das ds?')
         {
 
             confim_wind.is_DS = true
-            confim_wind.p_object_caller = "check_correct"
-            confim_wind.p_text = "MIR IST KALT(("
+            confim_wind.p_object_caller = "warning"
+            confim_wind.p_text = "Es ist kalt"
             confim_wind.show()
             flag_data_correct=false
         }
@@ -186,7 +215,7 @@ Item {
             txt_name.p_text = dataModel.p_ChangedValues_Name
             txt_discr.p_text=dataModel.p_ChangedValues_Discr
             txt_time.f_set_time(dataModel.p_ChangedValues_Time)
-            txt_date.p_text=dataModel.p_ChangedValues_Date
+            //date_selecter.f_set_date(Date(dataModel.p_ChangedValues_Date+" GMT+0300"))// .p_text=dataModel.p_ChangedValues_Date
             categ_list.currentIndex=dataModel.p_ChangedValues_Categ_Id
         }
     }
