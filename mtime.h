@@ -22,6 +22,7 @@ public:
 signals:
     void sendTaskSIgnal(int id);
     void sendTimeToQml(QString time);
+    void s_time_send(QString arg_time);
 
 public slots:
     //По этому слоту индексу задачи, который надо пропускать снова присваивается -1

@@ -8,7 +8,7 @@ Rectangle {
     id:but_rec
     width: 100
     height: 50
-
+    radius: p_radius
 
 
     color : focus ? "#5b765d" : "#9aa99b"
@@ -17,6 +17,7 @@ Rectangle {
     border.width: 2
     property string p_image_path: ""
     property bool p_has_image: false
+    property int p_radius: 0
     signal s_triggered
     //Хранит параметр передаваемый сигналом, это нужно для создания таких кнопок в репитере
     //ЧТобы анализируя параметр выполнять разные действия

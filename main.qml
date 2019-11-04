@@ -1,6 +1,8 @@
 import QtQuick 2.6
 import QtQuick.Window 2.2
 import QtQuick.Controls 1.4
+import QtAudioEngine 1.0
+import QtMultimedia 5.9
 import dataModel 1.0
 import "UI"
 import "UI/UIComponents"
@@ -26,6 +28,7 @@ ApplicationWindow {
             confim_wind.show()
         }
     }
+
 
     //Обьявляем основную модель, которая сделана как плагин
     TaskModel
@@ -73,10 +76,11 @@ ApplicationWindow {
             confim_wind.p_object_caller = "task_deadLine"
             confim_wind.show()
             task_timer.sl_task_del_complete()
-
+            test_snd.play()
 
         }
     }
+
 
     Connections
     {
@@ -129,13 +133,81 @@ ApplicationWindow {
     {
         id:load_pages
         x:0
-        y:0//upper_panel.height
+        y:upper_panel.height
         width: parent.width
-        height: parent.height
+        height: parent.height-upper_panel.height//-instr_panel.height
         Component.onCompleted:
         {
             setSource("file:///home/batya/QtProjects/TaskManager/UI/UIPages/UIPages_TasksList.qml", {dataModel:dataModel})
         }
+    }
+
+//    Rectangle
+//    {
+//        id:instr_panel
+//        x:0
+//        y:upper_panel.height
+//        width: parent.width
+//        height: parent.height/20
+//        border.width: 1
+//        color :"#b8c3b9"
+//        border.color: "#5b765d"
+//        UICOmponents_Button
+//        {
+//            id:but_save
+//            x:0
+//            y:0
+//            radius: 20
+//            width: parent.width/8
+//            height: parent.height
+//            text: "S"
+//            onS_triggered:
+//            {
+//                dataModel.f_save_data()
+//            }
+//        }
+//        UICOmponents_Button
+//        {
+//            id:but_clear
+//            x:but_save.width+str_find.width
+//            y:0
+//            radius: 20
+//            width: parent.width/8
+//            height: parent.height
+//            text: "F"
+//            onS_triggered:
+//            {
+////                test_snd.play()
+////                console.log(test_snd.errorString)
+//            }
+//        }
+//        Text {
+//            id: time_out
+//            x:parent.width-width-10
+//            y:0
+//            width: parent.width/6
+//            height: parent.height
+//            font.pixelSize: parent.height/2
+//            text: qsTr("00:00:00")
+//        }
+//        UIComponents_InputWindow
+//        {
+//            id:str_find
+//            x:but_save.width
+//            y:0
+//            width: parent.width-but_clear.width-but_save.width-time_out.width-10
+//            height: parent.height
+//            p_text: "<Поиск>"
+//            p_pixel_size: time_out.font.pixelSize
+//        }
+
+//    }
+
+    Audio
+    {
+        id:test_snd
+        source: "sound.wav"
+
     }
 
 
@@ -173,6 +245,7 @@ ApplicationWindow {
     //Загружает страницу
     function f_load_page()
     {
+        dataModel.f_refresh_tasks()
         load_pages.setSource("file:///home/batya/QtProjects/TaskManager/UI/UIPages/"+pagesDiscripion.f_get_current_page_sourse(), {dataModel:dataModel})
     }
 

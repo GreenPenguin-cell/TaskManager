@@ -16,14 +16,83 @@ Item {
         }
     }
 
+    Rectangle
+    {
+        id:instr_panel
+        x:0
+        y:0//upper_panel.height
+        width: parent.width
+        height: parent.height/20
+        border.width: 1
+        color :"#b8c3b9"
+        border.color: "#5b765d"
+        UICOmponents_Button
+        {
+            id:but_save
+            x:0
+            y:0
+            radius: 20
+            width: parent.width/8
+            height: parent.height
+            text: "S"
+            onS_triggered:
+            {
+                dataModel.f_save_data()
+            }
+        }
+        UICOmponents_Button
+        {
+            id:but_clear
+            x:but_save.width+str_find.width
+            y:0
+            radius: 20
+            width: parent.width/8
+            height: parent.height
+            text: "F"
+            onS_triggered:
+            {
+//                test_snd.play()
+//                console.log(test_snd.errorString)
+            }
+        }
+        Text {
+            id: time_out
+            x:parent.width-width-10
+            y:0
+            width: parent.width/6
+            height: parent.height
+            font.pixelSize: parent.height/2
+            text: qsTr("00:00:00")
+        }
+        UIComponents_InputWindow
+        {
+            id:str_find
+            x:but_save.width
+            y:0
+            width: parent.width-but_clear.width-but_save.width-time_out.width-10
+            height: parent.height
+            p_text: "<Поиск>"
+            p_pixel_size: time_out.font.pixelSize
+        }
+
+    }
+
+    Connections
+    {
+        target: task_timer
+        onS_time_send:
+        {
+            time_out.text=arg_time
+        }
+    }
     UIComponents_ListViewTable
     {
         id:data_view
 
         x:0
-        y:upper_panel.height
+        y:instr_panel.height
         width: parent.width
-        height: parent.height-upper_panel.height
+        height: parent.height-instr_panel.height
         dataSourse: dataModel
         p_element_height: parent.height/5
         p_element_width: width

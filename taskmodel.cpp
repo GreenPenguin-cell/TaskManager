@@ -8,8 +8,10 @@ TaskModel::TaskModel(QObject *parent):
     //    m_data.append("old");
     //    m_data.append("another old");
     //qDebug()<<QDate::currentDate().toString();
-    p_categs.append("Хуета");
-    p_categs.append("Говно");
+    p_categs.append("Работа");
+    p_categs.append("Увлечения");
+    p_categs.append("Спорт");
+    p_categs.append("Здоровье");
     f_read_data();
 
     has_modifications = false;
@@ -205,10 +207,36 @@ void TaskModel::f_read_data()
 
 }
 
+void TaskModel::f_hide_cat(int arg_id_cat)
+{
+    f_refresh_tasks();
+    qDebug()<<QString::number(arg_id_cat);
+    for(int i=0;i<m_data.count();i++)
+    {
+        if(m_data[i].p_task_categ_id!=arg_id_cat)
+        {
+            m_data_reserv.append(m_data[i]);
+            removeRow(i,QModelIndex());
+            //m_data.removeAt(i);
+        }
+    }
+    qDebug()<<"Tasks_count - "<<QString::number(m_data.count());
+}
+
+void TaskModel::f_refresh_tasks()
+{
+    for(int i=0;i<m_data_reserv.count();i++)
+    {
+        add(m_data_reserv[i].p_task_name, m_data_reserv[i].p_task_discr,m_data_reserv[i].p_task_time.toString(), m_data_reserv[i].p_task_date.toString(), m_data_reserv[i].p_task_categ_id);
+        //m_data.append(m_data_reserv[i]);
+    }
+    m_data_reserv.clear();
+}
+
 void TaskModel::sl_task_deadLine(int arg_task_id)
 {
     emit s_task_deadLine(m_data[arg_task_id].p_task_name);
-    f_play_sound();
+    //f_play_sound();
     removeRow(arg_task_id, QModelIndex());
 }
 

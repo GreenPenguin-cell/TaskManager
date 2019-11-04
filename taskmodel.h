@@ -16,6 +16,7 @@ class TaskModel : public QAbstractListModel
 
 public:
 
+
     Q_PROPERTY(QStringList p_categs READ get_p_categs WRITE set_p_categs NOTIFY s_p_categsChanged)
     Q_PROPERTY(QString p_ChangedValues_Name READ get_p_test WRITE set_p_test NOTIFY s_p_testChanged)
     Q_PROPERTY(QString p_ChangedValues_Discr READ get_p_ChangedValues_Discr WRITE set_p_ChangedValues_Discr NOTIFY s_p_ChangedValues_DiscrChanged)
@@ -168,6 +169,10 @@ public:
     {
         return m_data.count();
     }
+    //Скрывает все задачи, кроме указанной категории
+    Q_INVOKABLE void f_hide_cat(int arg_id_cat);
+    //Восстанавливаем список задач из резервного
+    Q_INVOKABLE void f_refresh_tasks();
     //пока публичная, дальше придумаю как скрыть
      QList<Command> m_data;
 
@@ -200,6 +205,8 @@ private:
     bool has_modifications;
     //Проигрывает звук при дедлайне
     void f_play_sound();
+    //Резервный список задач, сюда помещаются те который не должны быть показаны
+    QList<Command> m_data_reserv;
 
 
 };

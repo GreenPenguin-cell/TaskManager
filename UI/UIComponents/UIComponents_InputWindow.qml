@@ -12,6 +12,7 @@ Rectangle {
     visible: true
     property string p_message: text_inp.text
     property bool has_header: false
+    property int  p_pixel_size: -1
     property string  header_text: "<header>"
     property string  p_text: ""
 
@@ -28,6 +29,12 @@ Rectangle {
         property: binding_prop_name
         value: p_message
     }
+//    Binding
+//    {
+//        target: this
+//        property: "p_text"
+//        value: text_inp.text
+//    }
 
     TextEdit
     {
@@ -61,6 +68,8 @@ Rectangle {
 
         if(is_multiline)
             text_inp.font.pixelSize=inp_rec.height/6
+        if(p_pixel_size!=-1)
+            text_inp.font.pixelSize=p_pixel_size
     }
 
     function f_set_textSize(arg_size)

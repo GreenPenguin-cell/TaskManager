@@ -39,7 +39,7 @@ PagesDiscripion::PagesDiscripion()
     p_panel_buts.insert("Категория", "but_pageChange_Cat");
     //p_panel_buts.insert("Приоретет", "but_PageChange_Prior");
     p_panel_buts.insert("Добавить", "but_addChange");
-    p_panel_buts.insert("Настройки", "but_ChangePage_Set");
+    //p_panel_buts.insert("Настройки", "but_ChangePage_Set");
 
     p_current_page=p_pages[0];
 }

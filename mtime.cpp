@@ -20,19 +20,21 @@ void MTime::run()
     while(scan)
     {
 
+        emit s_time_send(QTime::currentTime().toString());
         if(material->get_rowCount()==0)
             continue;
         for(int i=0;i<material->get_rowCount();i++)
         {
-             QTime taskTime = material->m_data[i].p_task_time;
-             QDate taskDate = material->m_data[i].p_task_date;
-             //qDebug()<<taskTime;
-             if((taskTime==QTime::currentTime()&&(p_skip_id!=i))&(taskDate==QDate::currentDate()))
-             {
-                 qDebug()<<i;
-                 p_skip_id=i;
-                 emit sendTaskSIgnal(i);
-             }
+            QTime taskTime = material->m_data[i].p_task_time;
+            QDate taskDate = material->m_data[i].p_task_date;
+            //qDebug()<<taskTime;
+            if((taskTime==QTime::currentTime()&&(p_skip_id!=i))&(taskDate==QDate::currentDate()))
+            {
+                qDebug()<<i;
+                p_skip_id=i;
+                if(i!=-1)
+                    emit sendTaskSIgnal(i);
+            }
         }
     }
 
