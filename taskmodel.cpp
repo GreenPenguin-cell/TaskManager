@@ -211,15 +211,19 @@ void TaskModel::f_hide_cat(int arg_id_cat)
 {
     f_refresh_tasks();
     qDebug()<<QString::number(arg_id_cat);
-    for(int i=0;i<m_data.count();i++)
+
+    QList<int> deleted_indexes;
+    for(int i=m_data.count()-1;i<=0;i--)
     {
         if(m_data[i].p_task_categ_id!=arg_id_cat)
         {
             m_data_reserv.append(m_data[i]);
-            removeRow(i,QModelIndex());
+            //removeRow(i,QModelIndex());
+            deleted_indexes.append(i);
             //m_data.removeAt(i);
         }
     }
+
     qDebug()<<"Tasks_count - "<<QString::number(m_data.count());
 }
 

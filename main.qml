@@ -37,8 +37,8 @@ ApplicationWindow {
     }
     Component.onCompleted:
     {
-        task_timer.set_material(dataModel)
-        task_timer.start()//run()
+        //task_timer.set_material(dataModel)
+       //task_timer.start()//run()
     }
 
 

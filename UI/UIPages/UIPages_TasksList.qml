@@ -32,7 +32,7 @@ Item {
             x:0
             y:0
             radius: 20
-            width: parent.width/8
+            width: (parent.width-str_find.width)/2
             height: parent.height
             text: "S"
             onS_triggered:
@@ -46,7 +46,7 @@ Item {
             x:but_save.width+str_find.width
             y:0
             radius: 20
-            width: parent.width/8
+            width: (parent.width-str_find.width)/2
             height: parent.height
             text: "F"
             onS_triggered:
@@ -55,21 +55,21 @@ Item {
 //                console.log(test_snd.errorString)
             }
         }
-        Text {
-            id: time_out
-            x:parent.width-width-10
-            y:0
-            width: parent.width/6
-            height: parent.height
-            font.pixelSize: parent.height/2
-            text: qsTr("00:00:00")
-        }
+//        Text {
+//            id: time_out
+//            x:parent.width-width-10
+//            y:0
+//            width: parent.width/6
+//            height: parent.height
+//            font.pixelSize: parent.height/2
+//            text: qsTr("00:00:00")
+//        }
         UIComponents_InputWindow
         {
             id:str_find
             x:but_save.width
             y:0
-            width: parent.width-but_clear.width-but_save.width-time_out.width-10
+            width: parent.width/1.5//-but_clear.width*2
             height: parent.height
             p_text: "<Поиск>"
             p_pixel_size: time_out.font.pixelSize
@@ -77,14 +77,14 @@ Item {
 
     }
 
-    Connections
-    {
-        target: task_timer
-        onS_time_send:
-        {
-            time_out.text=arg_time
-        }
-    }
+//    Connections
+//    {
+//        target: task_timer
+//        onS_time_send:
+//        {
+//            time_out.text=arg_time
+//        }
+//    }
     UIComponents_ListViewTable
     {
         id:data_view
